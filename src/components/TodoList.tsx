@@ -2,9 +2,10 @@ import { Todo } from '../types/todo';
 
 type Props = {
   todoList: Todo[];
+  changeCompleted: (id: number) => void;
 };
 
-export const TodoList = ({ todoList }: Props) => {
+export const TodoList = ({ todoList, changeCompleted }: Props) => {
   return (
     <div className="space-y-3">
       {todoList.map((todo) => (
@@ -18,9 +19,15 @@ export const TodoList = ({ todoList }: Props) => {
                 type="checkbox"
                 className="size-5"
                 checked={todo.completed}
+                onChange={() => changeCompleted(todo.id)}
               />
             </div>
-            {todo.title}
+            {/* completedがtrueならクラスを適用、falseならクラスを適用しない */}
+            <span
+              className={todo.completed ? 'text-gray-400 line-through' : ''}
+            >
+              {todo.title}
+            </span>
           </label>
         </div>
       ))}
