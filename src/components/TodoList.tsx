@@ -1,3 +1,5 @@
+import { Trash2 } from 'lucide-react';
+
 import { Todo } from '../types/todo';
 
 type Props = {
@@ -29,6 +31,12 @@ export const TodoList = ({ todoList, changeCompleted }: Props) => {
               {todo.title}
             </span>
           </label>
+          <button
+            type="button"
+            className="rounded bg-gray-200 p-2 transition-colors hover:bg-gray-300"
+          >
+            <Trash2 className="size-5 text-gray-500" />
+          </button>
         </div>
       ))}
     </div>
