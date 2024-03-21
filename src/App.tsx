@@ -1,13 +1,25 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { TodoList } from './components/TodoList';
 import { AddTodoForm } from './components/AddTodoForm';
 import { TodoSummary } from './components/TodoSummary';
 
-import { dummyTodoList } from './data/dummyTodoList';
+import { Todo } from './types/todo';
 
 function App() {
-  const [todoList, setTodoList] = useState(dummyTodoList);
+  const [todoList, setTodoList] = useState<Todo[]>(() => {
+    // ローカルストレージからTodoを取得
+    const localStorageTodoList = localStorage.getItem('todoList');
+
+    // 配列に変換
+    return JSON.parse(localStorageTodoList ?? '[]');
+  });
+
+  // 第２引数のtodoListの値が変更されると発火
+  useEffect(() => {
+    // ローカルストレージに保存
+    localStorage.setItem('todoList', JSON.stringify(todoList));
+  }, [todoList]);
 
   // 対象のTodoの完了を変更
   const changeCompleted = (id: number) => {
